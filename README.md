@@ -32,12 +32,6 @@ See the contributing file for more information.
 
 ## Default environment
 
-- Operating system: Xubuntu 18.10, Windows 10 & macOS Mojave
-- Editor: Visual Studio Code
-- Visual Studio Code Extensions: [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- Operating system: Ubuntu 20.04, Windows 10 WSL2
 - Programming language: JavaScript (in the form of TypeScript)
 
-## Files to update
-- Dashobard.ts
-- Environment.ts
-- Environment.prod.ts
