@@ -2,6 +2,7 @@
 ## To install all needed libraries and software
 1. npm install
 1. sudo apt install php7.4
+1. To run tests you will also need a chromuium-based browser.
 
 ## To run the application
 1. Make sure the cache server is up and running, preferably on port 8000. (Otherwise you might need to edit [environment.ts](src/environments/environment.ts))
