@@ -1,29 +1,19 @@
 # Bus-schedule
 
-We are to build an application (native or web) that will display the time table / next departure for busses in the nearby area.
+An Angular application that displays the realtime bus schedule for each bus stop. 
 
 
 ### Planned Features
 
-- Delays
-- Next departure (for each busline)
-- Colors for different bus lines (yellow for long-distance and green for city)
-- if time === ALLOWS
-  - Offline mode handling (offline time table to use instead of API if API is offline, show warning on bottom of page)
+- New design
+- Offline system
+- Display the week number
 
+## Design Specification
 
-### Potential Features
-
-- Connecting busses / trains?
-- Arrives at Uppsala C (HH:MM)
-- Animations (new time)
-
-
-## Specification
-
-- Very clean (minimalistic)
+- Modern and minimal
 - Highly user friendly
-- Dark mode by default
+- Dark mode
 - Large text (easy to read)
 
 ## Contributing
@@ -32,6 +22,6 @@ See the contributing file for more information.
 
 ## Default environment
 
-- Operating system: Ubuntu 20.04, Windows 10 WSL2
+- Operating system: Ubuntu 20.10, Windows 10 WSL2 (Ubuntu 20.10)
 - Programming language: JavaScript (in the form of TypeScript)
 
