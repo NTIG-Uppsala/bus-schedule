@@ -18,12 +18,12 @@
 ## Configuring the webserver/changing bus stops
 1. Most webserver settings can be found in [environments.ts](src/environments/environment.ts)
 1. Bus stops can be changed under the `stops` key
-  * `url` key is a UL stop ID
-  * `ignore` is a list of bus numbers to ignore on that stop
-  * `bus_count` is a number representing the number of buses to show. (In both directions)
+    * `url` key is a UL stop ID
+    * `ignore` is a list of bus numbers to ignore on that stop
+    * `bus_count` is a number representing the number of buses to show. (In both directions)
 1. If you do change the port of the cache server, make sure to edit the values under the `endpoints` key
 
 ## Writing tests
 1. Unit tests are saved in the components spec file
-  * This means that the `Dashboard` component will have its unit tests in the file `dashboard.component.spec.ts`
+    * This means that the `Dashboard` component will have its unit tests in the file `dashboard.component.spec.ts`
 2. End-to-end tests are in the [e2e/src](e2e/src) directory.
