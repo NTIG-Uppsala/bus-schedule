@@ -13,7 +13,7 @@
 1. Make sure to run `npm start` in a different terminal
 1. Run the tests:
     * `npm test` to run unit tests
-    * `npm e2e` to run end-to-end tests
+    * `npm run e2e` to run end-to-end tests
 
 
 ## Configuring the webserver/changing bus stops
