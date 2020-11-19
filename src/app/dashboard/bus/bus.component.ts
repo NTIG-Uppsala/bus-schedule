@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { TransitDeparture } from 'src/app/transit-departure';
+import { StopDeparture } from 'src/app/stop-departure';
 import { MatRipple } from '@angular/material';
 
 @Component({
@@ -9,42 +9,23 @@ import { MatRipple } from '@angular/material';
 })
 export class BusComponent implements OnInit {
   public thisIsProgress: number;
-  _departures: Array<TransitDeparture> = [];
-  @Input() set departures(departures: Array<TransitDeparture>) {
+  _departures: { [buss: string]: { [stop: string]: Array<StopDeparture>; } } = {};
+  _directions: { [stop: string]: Array<StopDeparture>; } = {};
+
+  ngOnInit() { }
+
+  @Input() set departures(departures: { [buss: string]: { [stop: string]: Array<StopDeparture>; } }) {
     this._departures = departures;
-
-    if (this._departures.length > 0) {
-      if (this.nextDeparture) {
-        if (
-          this.nextDeparture.departure.getTime() -
-            this._departures[0].departure.getTime() !=
-          0
-        ) {
-          // Do something on departure update
-        }
-      }
-
-      this.nextDeparture = this._departures[0];
-    }
-
-    if (this._departures.length > 1) {
-      this.laterDeparture = this._departures[1];
-    } else {
-      this.laterDeparture = null;
-    }
-    this.thisIsProgress = Math.round(
-      510 - 0.43 * (this.nextDeparture.departing * 60)
-    );
   }
-
   get departures() {
     return this._departures;
   }
 
-  public deviation: { title: string; text: string; severity: number };
+  get directions() {
+    return this._directions;
+  }
 
-  public nextDeparture: TransitDeparture;
-  public laterDeparture: TransitDeparture;
+  public deviation: { title: string; text: string; severity: number };
 
   @ViewChild(MatRipple) ripple: MatRipple;
 
@@ -70,6 +51,4 @@ export class BusComponent implements OnInit {
       }
     }, 15000);
   }
-
-  ngOnInit() {}
 }

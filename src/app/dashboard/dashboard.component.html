@@ -36,12 +36,15 @@
     </div>
 
     <div *ngFor="let stops of busses | keyvalue">
-      <div *ngFor="let stop of stops.value | keyvalue">
+      <iw-bus [departures]="stops.value"></iw-bus>
+      <!-- <div *ngFor="let stop of stops.value | keyvalue">
         {{ stop.key }}
-        <div *ngFor="let bus of stop.value">
+        
+        <!-- <div *ngFor="let bus of stop.value">
           {{ bus.lineNo + " " + bus.towards + " " + bus.nextDepartureIn + " min" }}
-        </div>
-      </div>
+          
+        </div> -->
+      </div> -->
       <br>
     </div>
 
