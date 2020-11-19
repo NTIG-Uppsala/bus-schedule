@@ -8,12 +8,12 @@
   <!-- The titleBar -->
   <div class="d-flex flex-column py-3 align-items-stretch dashboard">
     <div class="container-fluid px-4">
-      <div class="float-left">
-        <iw-logo></iw-logo>
-      </div>
-      <div class="d-flex justify-content-end align-items-center">
+      <div class="d-flex justify-content-center">
         <!-- Time -->
-        <h1 class="mr-3 mt-1 text-white text-center date-time-text d-inline-block text-left text-uppercase"
+        <div class="float-left">
+          <iw-logo></iw-logo>
+        </div>
+        <h1 class="mx-5 my-1 text-white text-center date-time-text d-inline-block date-block text-left text-uppercase"
           style="font-family: 'Roboto Mono', monospace;">
           {{ clock | date: 'HH:mm:ss' }}
         </h1>
