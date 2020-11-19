@@ -18,19 +18,8 @@
           {{ clock | date: 'HH:mm:ss' }}
         </h1>
         <!-- Date -->
-        <div class="d-flex flex-column justify-content-center date-block text-uppercase text-center">
-          <!-- Name of day -->
-          <div class="flex-item">
-            <h2 class="mat-title mb-0" style="font-family: 'Roboto Mono', monospace;">
-              {{ clock | date: 'EE' }}
-            </h2>
-          </div>
-          <!-- Day -->
-          <div class="flex-item">
-            <h1 class="mat-display-1 mb-0" style="font-family: 'Roboto Mono', monospace;">
-              {{ clock | date: 'd' }}
-            </h1>
-          </div>
+        <div class="float-left">
+          <iw-logo></iw-logo>
         </div>
       </div>
     </div>
