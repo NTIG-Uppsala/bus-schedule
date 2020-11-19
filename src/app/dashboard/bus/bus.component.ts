@@ -12,10 +12,21 @@ export class BusComponent implements OnInit {
   _departures: { [buss: string]: { [stop: string]: Array<StopDeparture>; } } = {};
   _directions: { [stop: string]: Array<StopDeparture>; } = {};
 
+  _stopName: string;
+
+  _stop: string;
+  @Input() set stop(stop: string) {
+    this._stop = stop;
+  }
+  get stop() {
+    return this._stop;
+  }
+
   ngOnInit() { }
 
   @Input() set departures(departures: { [buss: string]: { [stop: string]: Array<StopDeparture>; } }) {
     this._departures = departures;
+    this._stopName = departures[Object.keys(departures)[0]][0]["stopName"];
   }
   get departures() {
     return this._departures;

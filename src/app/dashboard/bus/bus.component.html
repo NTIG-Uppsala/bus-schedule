@@ -1,8 +1,25 @@
-<!-- Bus stop name -->
-<mat-card class="lower d-flex flex-row justify-content-center">
-  <div *ngFor="let dir of departures | keyvalue">
-    {{ dir.key }}
+<mat-card class="lower d-flex flex-row busses">
+  <div class="bus-info">
+    <span class="d-block">{{ _stop }}</span>
+    <span class="d-block">
+      {{ _stopName }}
+    </span>
   </div>
-
-
+  <div class="d-flex flex-column bus-container">
+    <div *ngFor="let dep of departures | keyvalue" class="d-flex flex-column col-6 bus">
+      <div class="d-flex flex-row justify-content-between">
+        <div class="d-flex flex-column">
+          <span class="bus-torwards">Mot</span>
+          <div>
+            <a class="bus-destination">{{ dep.value[0]["towards"] }}</a>
+          </div>
+        </div>
+        <div class="d-flex flex-column text-right bus-times">
+          <div *ngIf="dep.value[0]['nextDepartureIn'] > 1">{{ dep.value[0]["nextDepartureIn"] + " min" }}</div>
+          <div *ngIf="dep.value[0]['nextDepartureIn'] <= 1">Nu</div>
+          <div *ngIf="dep.value.length > 1">Nästa {{ dep.value[1]["nextDepartureTime"] }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </mat-card>

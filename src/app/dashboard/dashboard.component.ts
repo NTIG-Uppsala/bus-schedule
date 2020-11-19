@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
     this.backOnline = true;
     setTimeout(() => {
       this.backOnline = false;
-    }, 10000);
+    }, 10000000);
   }
 
   /**
@@ -74,9 +74,9 @@ export class DashboardComponent implements OnInit {
       if (stop_op['ignore'] && stop_op['ignore'].includes(departure['line']['lineNo'])) return;
       if (environment.stops[stop]['directions'] &&
         environment.stops[stop]['directions'].includes(departure['area'])) {
-        dep.push(new StopDeparture(departure));
+        dep.push(new StopDeparture(departure, stop));
       } else if (!environment.stops[stop]['directions']) {
-        dep.push(new StopDeparture(departure));
+        dep.push(new StopDeparture(departure, stop));
       }
     });
     if (this.initBussesData[stop] === undefined) this.initBussesData[stop] = [];
@@ -97,6 +97,7 @@ export class DashboardComponent implements OnInit {
         if (this.busses[line][direction].length < 2) this.busses[line][direction].push(bus);
       });
     });
+    console.log(this.busses)
   }
 
   /**
@@ -122,7 +123,7 @@ export class DashboardComponent implements OnInit {
       console.log('No more stops to update, queuing update in 10 seconds.');
       setTimeout(() => {
         this.fetchAllStopDepartures();
-      }, 10 * 1000);
+      }, 10 * 100000000);
       return;
     }
     const stop = stops[0];
@@ -160,6 +161,11 @@ export class DashboardComponent implements OnInit {
    */
   private fetchAllStopDepartures(): void {
     this.updateStopDepartures(this.stops.slice(0));
+  }
+
+
+  sorter = function(a ,b ) {
+    return parseInt(a.key) > parseInt(b.key);
   }
 
   /**
