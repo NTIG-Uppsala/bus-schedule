@@ -71,12 +71,6 @@ export class DashboardComponent implements OnInit {
     if (Object.keys(data).length < 1) return;
     data['departures'].forEach((departure: object) => {
       const stop_op = environment.stops[stop];
-      let area_count = 0;
-      dep.forEach(el => {
-        if (el['direction'] === departure['area']) area_count++;
-      });
-      if (!stop_op['bus_count']) stop_op['bus_count'] = this.bus_max;
-      if (area_count >= stop_op['bus_count']) return;
       if (stop_op['ignore'] && stop_op['ignore'].includes(departure['line']['lineNo'])) return;
       if (environment.stops[stop]['directions'] &&
         environment.stops[stop]['directions'].includes(departure['area'])) {
@@ -87,22 +81,7 @@ export class DashboardComponent implements OnInit {
     });
     if (this.initBussesData[stop] === undefined) this.initBussesData[stop] = [];
     this.initBussesData[stop].push(dep);
-    // dep.forEach((el: Object) => {
-    //   const line = el["lineNo"];
-    //   
-    //   if (this.busses[line][stop] === undefined) this.busses[line][stop] = [];
-    //   this.busses[line][stop].push(el);
-    // });
 
-    // dep.forEach((el) => {
-    //   if (!this.stopDeparturesDirections[stop].includes(el['direction'])) {
-    //     this.stopDeparturesDirections[stop].push(el['direction']);
-    //   }
-    // });
-    // for (const key of Object.keys(this.stopDeparturesDirections)) {
-    //   this.stopDeparturesDirections[key].sort();
-    // }
-    // this.stopDepartures[stop] = dep;
     if (this.error != null) this.showBackOnline();
     this.error = null;
   }
@@ -115,7 +94,7 @@ export class DashboardComponent implements OnInit {
         const direction = bus["direction"];
         if (this.busses[line] === undefined) this.busses[line] = {};
         if (this.busses[line][direction] === undefined) this.busses[line][direction] = [];
-        this.busses[line][direction].push(bus);
+        if (this.busses[line][direction].length < 2) this.busses[line][direction].push(bus);
       });
     });
   }
@@ -127,7 +106,6 @@ export class DashboardComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.api.fetch(environment.stops[stop]['url']).then(res => {
         this.parseStopDepartures(stop, res);
-        // console.log(this.busses);
         resolve();
       }).catch(err => reject(err));
     });
@@ -153,10 +131,10 @@ export class DashboardComponent implements OnInit {
         this.fetchStopDepartures(stop).then(() => {
           stops.splice(0, 1);
           this.updateStopDepartures(stops);
-          this.fatal = false;
           if (stops.length == 0) {
             this.getBusses();
           }
+          this.fatal = false;
         }).catch(err => {
           if (retry >= this.retryAttempts) {
             this.updateStopDepartures(stops, false, 0);
