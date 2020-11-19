@@ -21,6 +21,9 @@ export class DashboardComponent implements OnInit {
   public backOnline = false;
   public bus_max = 4;
 
+  public busses: Object = {};
+  public initBussesData: Object = {};
+
   /**
    * This constructor will initialize all needed variables for each stop.
    * This needs to be updated in the future if the site will be using mainly buses,
@@ -68,12 +71,6 @@ export class DashboardComponent implements OnInit {
     if (Object.keys(data).length < 1) return;
     data['departures'].forEach((departure: object) => {
       const stop_op = environment.stops[stop];
-      let area_count = 0;
-      dep.forEach(el => {
-        if (el['direction'] === departure['area']) area_count++;
-      });
-      if (!stop_op['bus_count']) stop_op['bus_count'] = this.bus_max;
-      if (area_count >= stop_op['bus_count']) return;
       if (stop_op['ignore'] && stop_op['ignore'].includes(departure['line']['lineNo'])) return;
       if (environment.stops[stop]['directions'] &&
         environment.stops[stop]['directions'].includes(departure['area'])) {
@@ -82,20 +79,24 @@ export class DashboardComponent implements OnInit {
         dep.push(new StopDeparture(departure));
       }
     });
-    dep.forEach((el) => {
-      if (!this.stopDeparturesDirections[stop].includes(el['direction'])) {
-        this.stopDeparturesDirections[stop].push(el['direction']);
-      }
-    });
-    for (const key of Object.keys(this.stopDeparturesDirections)) {
-      this.stopDeparturesDirections[key].sort();
-    }
-    this.stopDepartures[stop] = dep;
-    if (this.error != null) {
-      this.showBackOnline();
-    }
-    this.error = null;
+    if (this.initBussesData[stop] === undefined) this.initBussesData[stop] = [];
+    this.initBussesData[stop].push(dep);
 
+    if (this.error != null) this.showBackOnline();
+    this.error = null;
+  }
+
+  private getBusses() {
+    this.busses = {};
+    this.stops.forEach((stop) => {
+      this.initBussesData[stop][0].forEach(bus => {
+        const line = bus["lineNo"];
+        const direction = bus["direction"];
+        if (this.busses[line] === undefined) this.busses[line] = {};
+        if (this.busses[line][direction] === undefined) this.busses[line][direction] = [];
+        if (this.busses[line][direction].length < 2) this.busses[line][direction].push(bus);
+      });
+    });
   }
 
   /**
@@ -130,6 +131,9 @@ export class DashboardComponent implements OnInit {
         this.fetchStopDepartures(stop).then(() => {
           stops.splice(0, 1);
           this.updateStopDepartures(stops);
+          if (stops.length == 0) {
+            this.getBusses();
+          }
           this.fatal = false;
         }).catch(err => {
           if (retry >= this.retryAttempts) {

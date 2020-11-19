@@ -24,13 +24,24 @@
       </div>
     </div>
 
-    <div *ngFor="let stop of stops">
-      <!-- Bus stop with data -->
+    <div *ngFor="let stops of busses | keyvalue">
+      <iw-bus [departures]="stops.value"></iw-bus>
+      <!-- <div *ngFor="let stop of stops.value | keyvalue">
+        {{ stop.key }}
+        
+        <!-- <div *ngFor="let bus of stop.value">
+          {{ bus.lineNo + " " + bus.towards + " " + bus.nextDepartureIn + " min" }}
+          
+        </div> -->
+      </div> -->
+      <br>
+    </div>
+
+    <!-- <div *ngFor="let stop of stops">
       <div class="d-inline-block my-2 px-4 w-100" *ngIf="stopDepartures[stop].length > 0">
         <iw-stop [name]="stop" [departures]="stopDepartures[stop]" [directions]="stopDeparturesDirections[stop]">
         </iw-stop>
       </div>
-      <!-- Bus stop section but only shown when online data isn't found -->
       <div class="d-inline-block my-3 px-4 w-100" *ngIf="stopDepartures[stop].length === 0">
         <mat-card class="upper animated fadeIn">
           <div class="d-flex mat-display-1 mb-0 font-weight-normal">
@@ -50,7 +61,7 @@
         </mat-card>
       </div>
 
-    </div>
+    </div> -->
 
   </div>
   <!-- Offline bottom banner -->
