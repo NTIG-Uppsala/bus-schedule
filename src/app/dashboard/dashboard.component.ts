@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
     this.backOnline = true;
     setTimeout(() => {
       this.backOnline = false;
-    }, 10000000);
+    }, 10 * 1000);
   }
 
   /**
