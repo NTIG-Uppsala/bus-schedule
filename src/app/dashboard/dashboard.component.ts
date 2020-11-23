@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class DashboardComponent implements OnInit {
   public timeOut = 10 * 1000;
-  
+
   public stops = [];
   public stopDepartures: { [id: string]: Array<StopDeparture>; } = {};
   public stopDeparturesDirections: Array<Array<string>> = [];
