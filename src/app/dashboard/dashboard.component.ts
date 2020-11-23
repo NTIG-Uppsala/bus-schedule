@@ -123,7 +123,7 @@ export class DashboardComponent implements OnInit {
       console.log('No more stops to update, queuing update in 10 seconds.');
       setTimeout(() => {
         this.fetchAllStopDepartures();
-      }, 10 * 100000000);
+      }, 10 * 1000);
       return;
     }
     const stop = stops[0];
