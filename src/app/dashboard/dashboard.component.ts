@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit {
         dep.push(new StopDeparture(departure, stop));
       }
     });
-    if (this.initBussesData[stop] === undefined) this.initBussesData[stop] = [];
+    this.initBussesData[stop] = [];
     this.initBussesData[stop].push(dep);
 
     if (this.error != null) this.showBackOnline();
@@ -90,14 +90,16 @@ export class DashboardComponent implements OnInit {
     this.busses = {};
     this.stops.forEach((stop) => {
       this.initBussesData[stop][0].forEach(bus => {
-        const line = bus["lineNo"];
-        const direction = bus["direction"];
+        const line = bus['lineNo'];
+        const direction = bus['direction'];
         if (this.busses[line] === undefined) this.busses[line] = {};
         if (this.busses[line][direction] === undefined) this.busses[line][direction] = [];
-        if (this.busses[line][direction].length < 2) this.busses[line][direction].push(bus);
+        const busTime = bus['nextDepartureTime'].split(':');
+        if (new Date().valueOf() > new Date().setHours(busTime[0], busTime[1], 0)) return;
+        this.busses[line][direction].push(bus);
       });
     });
-    console.log(this.busses)
+    console.log(this.busses);
   }
 
   /**
@@ -132,7 +134,7 @@ export class DashboardComponent implements OnInit {
         this.fetchStopDepartures(stop).then(() => {
           stops.splice(0, 1);
           this.updateStopDepartures(stops);
-          if (stops.length == 0) {
+          if (stops.length === 0) {
             this.getBusses();
           }
           this.fatal = false;
@@ -148,8 +150,12 @@ export class DashboardComponent implements OnInit {
           }, 10 * 1000);
         });
       } else {
+        this.getBusses();
         console.log(offlineCounter);
         console.log('I should probably implement failover cache for this new stop stuff');
+        setTimeout(() => {
+          this.fetchAllStopDepartures();
+        }, 10 * 1000);
       }
     });
     if (this.loading) setTimeout(() => { this.loading = false; }, 1500);
@@ -164,9 +170,9 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  sorter = function(a ,b ) {
-    return parseInt(a.key) > parseInt(b.key);
-  }
+  sorter = function (a, b) {
+    return Number(a.key) > Number(b.key);
+  };
 
   /**
    * Angular needs this function to be defined for component
