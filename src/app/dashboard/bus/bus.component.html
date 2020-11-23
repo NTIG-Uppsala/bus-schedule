@@ -1,5 +1,8 @@
-<mat-card class="lower d-flex flex-row busses">
-  <div class="bus-info">
+<mat-card class="lower d-flex flex-row busses" *ngIf="(departures | keyvalue).length > 0">
+  <div class="bus-info"
+       [style.background-color]="(departures | keyvalue)[0].value[0].color"
+       [style.color]="(departures | keyvalue)[0].value[0].textColor"
+    >
     <span class="d-block">{{ _stop }}</span>
     <span class="d-block">
       {{ _stopName }}

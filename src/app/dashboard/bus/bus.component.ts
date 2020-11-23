@@ -9,6 +9,8 @@ import { MatRipple } from '@angular/material';
 })
 export class BusComponent implements OnInit {
   public thisIsProgress: number;
+  public deviation: { title: string; text: string; severity: number };
+  @ViewChild(MatRipple) ripple: MatRipple;
   _departures: { [buss: string]: { [stop: string]: Array<StopDeparture>; } } = {};
   _directions: { [stop: string]: Array<StopDeparture>; } = {};
 
@@ -26,7 +28,7 @@ export class BusComponent implements OnInit {
 
   @Input() set departures(departures: { [buss: string]: { [stop: string]: Array<StopDeparture>; } }) {
     this._departures = departures;
-    this._stopName = departures[Object.keys(departures)[0]][0]["stopName"];
+    this._stopName = departures[Object.keys(departures)[0]][0]['stopName'];
   }
   get departures() {
     return this._departures;
@@ -36,9 +38,7 @@ export class BusComponent implements OnInit {
     return this._directions;
   }
 
-  public deviation: { title: string; text: string; severity: number };
 
-  @ViewChild(MatRipple) ripple: MatRipple;
 
   /** Shows a centered and persistent ripple. */
   launchRipple() {
