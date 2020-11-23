@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
     this.backOnline = true;
     setTimeout(() => {
       this.backOnline = false;
-    }, 10 * 1000);
+    }, this.timeOut);
   }
 
   /**
@@ -101,7 +101,6 @@ export class DashboardComponent implements OnInit {
         this.busses[line][direction].push(bus);
       });
     });
-    console.log(this.busses);
   }
 
   /**
@@ -127,7 +126,7 @@ export class DashboardComponent implements OnInit {
       console.log('No more stops to update, queuing update in 10 seconds.');
       setTimeout(() => {
         this.fetchAllStopDepartures();
-      }, 10 * 1000);
+      }, this.timeOut);
       return;
     }
     const stop = stops[0];
@@ -149,7 +148,7 @@ export class DashboardComponent implements OnInit {
           console.warn('Failed to fetch realtime data, will try offline in 10s');
           setTimeout(() => {
             this.updateStopDepartures(stops, true, retry + 1);
-          }, 10 * 1000);
+          }, this.timeOut);
         });
       } else {
         this.getBusses();
