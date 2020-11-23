@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  public timeOut = 10 * 1000;
+  
   public stops = [];
   public stopDepartures: { [id: string]: Array<StopDeparture>; } = {};
   public stopDeparturesDirections: Array<Array<string>> = [];
@@ -155,7 +157,7 @@ export class DashboardComponent implements OnInit {
         console.log('I should probably implement failover cache for this new stop stuff');
         setTimeout(() => {
           this.fetchAllStopDepartures();
-        }, 10 * 1000);
+        }, this.timeOut);
       }
     });
     if (this.loading) setTimeout(() => { this.loading = false; }, 1500);
