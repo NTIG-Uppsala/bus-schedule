@@ -9,3 +9,10 @@
 
 ## Shellscript files
 - add the .sh , .id, .log files in "home/pi/"
+
+## Additional programms may have to be installed on the raspberry pi
+- node.js
+- npm install
+- pnp 
+- git
+- may be more stuff
