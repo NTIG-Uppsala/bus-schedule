@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  public timeOut = 10 * 1000;
+
   public stops = [];
   public stopDepartures: { [id: string]: Array<StopDeparture>; } = {};
   public stopDeparturesDirections: Array<Array<string>> = [];
@@ -20,6 +22,9 @@ export class DashboardComponent implements OnInit {
   private retryAttempts = 3;
   public backOnline = false;
   public bus_max = 4;
+
+  public busses: Object = {};
+  public initBussesData: Object = {};
 
   /**
    * This constructor will initialize all needed variables for each stop.
@@ -45,7 +50,7 @@ export class DashboardComponent implements OnInit {
   private startClock() {
     setInterval(() => {
       this.clock = new Date();
-    }, 1000);
+    }, 1000 * 15);
   }
 
   /**
@@ -56,7 +61,7 @@ export class DashboardComponent implements OnInit {
     this.backOnline = true;
     setTimeout(() => {
       this.backOnline = false;
-    }, 10000);
+    }, this.timeOut);
   }
 
   /**
@@ -68,34 +73,34 @@ export class DashboardComponent implements OnInit {
     if (Object.keys(data).length < 1) return;
     data['departures'].forEach((departure: object) => {
       const stop_op = environment.stops[stop];
-      let area_count = 0;
-      dep.forEach(el => {
-        if (el['direction'] === departure['area']) area_count++;
-      });
-      if (!stop_op['bus_count']) stop_op['bus_count'] = this.bus_max;
-      if (area_count >= stop_op['bus_count']) return;
       if (stop_op['ignore'] && stop_op['ignore'].includes(departure['line']['lineNo'])) return;
       if (environment.stops[stop]['directions'] &&
         environment.stops[stop]['directions'].includes(departure['area'])) {
-        dep.push(new StopDeparture(departure));
+        dep.push(new StopDeparture(departure, stop));
       } else if (!environment.stops[stop]['directions']) {
-        dep.push(new StopDeparture(departure));
+        dep.push(new StopDeparture(departure, stop));
       }
     });
-    dep.forEach((el) => {
-      if (!this.stopDeparturesDirections[stop].includes(el['direction'])) {
-        this.stopDeparturesDirections[stop].push(el['direction']);
-      }
-    });
-    for (const key of Object.keys(this.stopDeparturesDirections)) {
-      this.stopDeparturesDirections[key].sort();
-    }
-    this.stopDepartures[stop] = dep;
-    if (this.error != null) {
-      this.showBackOnline();
-    }
-    this.error = null;
+    this.initBussesData[stop] = [];
+    this.initBussesData[stop].push(dep);
 
+    if (this.error != null) this.showBackOnline();
+    this.error = null;
+  }
+
+  private getBusses() {
+    this.busses = {};
+    this.stops.forEach((stop) => {
+      this.initBussesData[stop][0].forEach(bus => {
+        const line = bus['lineNo'];
+        const direction = bus['direction'];
+        if (this.busses[line] === undefined) this.busses[line] = {};
+        if (this.busses[line][direction] === undefined) this.busses[line][direction] = [];
+        const busTime = bus['nextDepartureTime'].split(':');
+        if (new Date().valueOf() > new Date().setHours(busTime[0], busTime[1], 0)) return;
+        this.busses[line][direction].push(bus);
+      });
+    });
   }
 
   /**
@@ -121,7 +126,7 @@ export class DashboardComponent implements OnInit {
       console.log('No more stops to update, queuing update in 10 seconds.');
       setTimeout(() => {
         this.fetchAllStopDepartures();
-      }, 10 * 1000);
+      }, this.timeOut);
       return;
     }
     const stop = stops[0];
@@ -130,6 +135,9 @@ export class DashboardComponent implements OnInit {
         this.fetchStopDepartures(stop).then(() => {
           stops.splice(0, 1);
           this.updateStopDepartures(stops);
+          if (stops.length === 0) {
+            this.getBusses();
+          }
           this.fatal = false;
         }).catch(err => {
           if (retry >= this.retryAttempts) {
@@ -140,11 +148,15 @@ export class DashboardComponent implements OnInit {
           console.warn('Failed to fetch realtime data, will try offline in 10s');
           setTimeout(() => {
             this.updateStopDepartures(stops, true, retry + 1);
-          }, 10 * 1000);
+          }, this.timeOut);
         });
       } else {
+        this.getBusses();
         console.log(offlineCounter);
         console.log('I should probably implement failover cache for this new stop stuff');
+        setTimeout(() => {
+          this.fetchAllStopDepartures();
+        }, this.timeOut);
       }
     });
     if (this.loading) setTimeout(() => { this.loading = false; }, 1500);
@@ -157,6 +169,11 @@ export class DashboardComponent implements OnInit {
   private fetchAllStopDepartures(): void {
     this.updateStopDepartures(this.stops.slice(0));
   }
+
+
+  sorter = function (a, b) {
+    return Number(a.key) > Number(b.key);
+  };
 
   /**
    * Angular needs this function to be defined for component

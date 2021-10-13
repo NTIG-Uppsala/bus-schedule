@@ -4,6 +4,7 @@ import { CommonModule } from "@angular/common";
 import { DashboardRoutingModule } from "./dashboard-routing.module";
 import { DashboardComponent } from "./dashboard.component";
 import { StopComponent } from "./stop/stop.component";
+import { BusComponent } from "./bus/bus.component";
 import { SharedModule } from "../shared/shared.module";
 import { SplashComponent } from './splash/splash.component';
 import { LogoComponent } from './logo/logo.component';
@@ -11,7 +12,7 @@ import { FatalComponent } from './fatal/fatal.component';
 import { UpdateSplashComponent } from './update-splash/update-splash.component';
 
 @NgModule({
-  declarations: [DashboardComponent, StopComponent, SplashComponent, LogoComponent, FatalComponent, UpdateSplashComponent],
+  declarations: [DashboardComponent, StopComponent, SplashComponent, LogoComponent, FatalComponent, UpdateSplashComponent, BusComponent],
   imports: [CommonModule, DashboardRoutingModule, SharedModule]
 })
-export class DashboardModule {}
+export class DashboardModule { }

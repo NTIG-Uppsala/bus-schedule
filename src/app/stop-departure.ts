@@ -3,6 +3,8 @@ export class StopDeparture {
   public direction: string;
   public coordinates: object;
 
+  public stopName: string;
+
   public nextDepartureTime: string;
   public nextDepartureIn: number;
 
@@ -15,8 +17,10 @@ export class StopDeparture {
 
   public color: string;
   public textColor: string;
-  constructor(raw: object) {
+  constructor(raw: object, stopName) {
     this.data = raw;
+
+    this.stopName = stopName;
 
     this.direction = raw['area'];
     this.coordinates = raw['coordinates'];

@@ -49,11 +49,14 @@ $iw-app-theme: mat-light-theme($iw-app-primary, $iw-app-accent, $iw-app-warn);
 @include angular-material-theme($iw-app-theme);
 
 body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: map-get($mat-wasp, 900);
   color: #ffffff;
-  background: linear-gradient(149deg,
-      rgba(25, 26, 39, 1) 0%,
-      rgba(29, 26, 42, 1) 100%) !important;
+  // background: linear-gradient(149deg,
+  //     rgba(25, 26, 39, 1) 0%,
+  //     rgba(29, 26, 42, 1) 100%) !important;
+  background-image: url("assets/background.png");
+  background-position: center;
 }
 
 *:focus {

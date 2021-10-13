@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { TransitDeparture } from 'src/app/transit-departure';
+import { StopDeparture } from 'src/app/stop-departure';
 import { MatRipple } from '@angular/material';
 
 @Component({
@@ -9,44 +9,36 @@ import { MatRipple } from '@angular/material';
 })
 export class BusComponent implements OnInit {
   public thisIsProgress: number;
-  _departures: Array<TransitDeparture> = [];
-  @Input() set departures(departures: Array<TransitDeparture>) {
-    this._departures = departures;
+  public deviation: { title: string; text: string; severity: number };
+  @ViewChild(MatRipple) ripple: MatRipple;
+  _departures: { [buss: string]: { [stop: string]: Array<StopDeparture>; } } = {};
+  _directions: { [stop: string]: Array<StopDeparture>; } = {};
 
-    if (this._departures.length > 0) {
-      if (this.nextDeparture) {
-        if (
-          this.nextDeparture.departure.getTime() -
-            this._departures[0].departure.getTime() !=
-          0
-        ) {
-          // Do something on departure update
-        }
-      }
+  _stopName: string;
 
-      this.nextDeparture = this._departures[0];
-    }
-
-    if (this._departures.length > 1) {
-      this.laterDeparture = this._departures[1];
-    } else {
-      this.laterDeparture = null;
-    }
-    this.thisIsProgress = Math.round(
-      510 - 0.43 * (this.nextDeparture.departing * 60)
-    );
+  _stop: string;
+  @Input() set stop(stop: string) {
+    this._stop = stop;
+  }
+  get stop() {
+    return this._stop;
   }
 
+  ngOnInit() { }
+
+  @Input() set departures(departures: { [buss: string]: { [stop: string]: Array<StopDeparture>; } }) {
+    this._departures = departures;
+    this._stopName = departures[Object.keys(departures)[0]][0]['stopName'];
+  }
   get departures() {
     return this._departures;
   }
 
-  public deviation: { title: string; text: string; severity: number };
+  get directions() {
+    return this._directions;
+  }
 
-  public nextDeparture: TransitDeparture;
-  public laterDeparture: TransitDeparture;
 
-  @ViewChild(MatRipple) ripple: MatRipple;
 
   /** Shows a centered and persistent ripple. */
   launchRipple() {
@@ -70,6 +62,4 @@ export class BusComponent implements OnInit {
       }
     }, 15000);
   }
-
-  ngOnInit() {}
 }
