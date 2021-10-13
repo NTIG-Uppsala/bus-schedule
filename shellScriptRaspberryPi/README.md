@@ -3,7 +3,9 @@
 # These files has to be added in the raspberry pi to launch the website on startup. 
 
 ## AUTOSTART
-- add autostart file in "/etc/xdg/lxsession/LXDE-pi/autostart"
+- Open Terminal
+- run "crontab -e"
+- run "@reebot home/pi/start.sh"
 
 ## Shellscript files
 - add the .sh , .id, .log files in "home/pi/"

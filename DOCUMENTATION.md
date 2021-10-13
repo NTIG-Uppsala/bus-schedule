@@ -15,7 +15,7 @@
 1. Run the tests:
     * `npm test` to run unit tests
     * `npm run e2e` to run end-to-end tests
-
+ 
 
 ## Configuring the webserver/changing bus stops
 1. Most webserver settings can be found in [environments.ts](src/environments/environment.ts)
