@@ -8,11 +8,12 @@ import { BusComponent } from "./bus/bus.component";
 import { SharedModule } from "../shared/shared.module";
 import { SplashComponent } from './splash/splash.component';
 import { LogoComponent } from './logo/logo.component';
+import { FloorComponent } from './floor/floor.component';
 import { FatalComponent } from './fatal/fatal.component';
 import { UpdateSplashComponent } from './update-splash/update-splash.component';
 
 @NgModule({
-  declarations: [DashboardComponent, StopComponent, SplashComponent, LogoComponent, FatalComponent, UpdateSplashComponent, BusComponent],
+  declarations: [DashboardComponent, StopComponent, SplashComponent, LogoComponent, FatalComponent, FloorComponent, UpdateSplashComponent, BusComponent],
   imports: [CommonModule, DashboardRoutingModule, SharedModule]
 })
 export class DashboardModule { }

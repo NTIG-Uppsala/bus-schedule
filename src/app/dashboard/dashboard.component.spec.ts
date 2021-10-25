@@ -11,6 +11,7 @@ import { StopComponent } from './stop/stop.component';
 import { LogoComponent } from './logo/logo.component';
 
 import { testData } from '../../../e2e/src/testdata';
+import { FloorComponent } from './floor/floor.component';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -24,7 +25,8 @@ describe('DashboardComponent', () => {
         UpdateSplashComponent,
         FatalComponent,
         StopComponent,
-        LogoComponent
+        LogoComponent,
+        FloorComponent
       ],
       imports: [
         MatCardModule,

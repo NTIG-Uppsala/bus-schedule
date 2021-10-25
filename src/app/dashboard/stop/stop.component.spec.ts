@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { StopComponent } from './stop.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LogoComponent } from './../logo/logo.component';
+import { FloorComponent } from './../floor/floor.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
@@ -12,7 +13,7 @@ describe('StopComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StopComponent, LogoComponent ],
+      declarations: [ StopComponent, LogoComponent , FloorComponent ,],
       imports: [ MatCardModule, MatProgressSpinnerModule ]
     })
     .compileComponents();

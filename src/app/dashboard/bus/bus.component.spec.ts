@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { LogoComponent } from './../logo/logo.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FloorComponent } from './../floor/floor.component';
+
 
 describe('BusComponent', () => {
   let component: BusComponent;
@@ -12,7 +14,7 @@ describe('BusComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BusComponent, LogoComponent ],
+      declarations: [ BusComponent, LogoComponent,FloorComponent ],
       imports: [ MatCardModule, MatProgressSpinnerModule ]
     })
     .compileComponents();
