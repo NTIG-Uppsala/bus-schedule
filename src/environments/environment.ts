@@ -14,7 +14,7 @@ export const environment = {
     'Polacksbacken': {
       url: 'https://www.ul.se/api/stop/departures?stopId=700572',
     },
-    'Grindstugan': {
+    'Regementsvägen': {
       url: 'https://www.ul.se/api/stop/departures?stopId=700021',
       ignore: [
         4, 12, 1
