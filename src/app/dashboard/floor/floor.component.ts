@@ -6,11 +6,11 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./floor.component.scss']
 })
 export class FloorComponent implements OnInit {
-  @Input() width: number = 121;
-  @Input() height: number = 106;
+  @Input() width: number = 500;
+  @Input() height: number = 200;
 
-  public _width: string = '121px';
-  public _height: string = '106px';
+  public _width: string = '500px';
+  public _height: string = '500px';
 
   constructor() {}
 
