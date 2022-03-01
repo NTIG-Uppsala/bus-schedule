@@ -17,7 +17,7 @@ export const environment = {
     'Regements- vägen': {
       url: 'https://www.ul.se/api/stop/departures?stopId=700021',
       ignore: [
-        4, 12, 1
+        4, 12, 1, 101
       ],
     },
     'Lundellska skolan': {
